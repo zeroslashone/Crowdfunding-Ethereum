@@ -1,0 +1,26 @@
+{
+  "name": "crowdfunding-ethereum",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@material-ui/core": "^4.10.1",
+    "@material-ui/icons": "^4.9.1",
+    "@material-ui/lab": "^4.0.0-alpha.56",
+    "@truffle/hdwallet-provider": "^1.0.35",
+    "antd": "^4.3.3",
+    "chai": "^4.2.0",
+    "fs-extra": "^9.0.1",
+    "mocha": "^7.2.0",
+    "next": "9.4.4",
+    "path": "^0.12.7",
+    "react": "16.13.1",
+    "react-dom": "16.13.1",
+    "solc": "^0.6.9",
+    "web3": "^1.2.8"
+  }
+}

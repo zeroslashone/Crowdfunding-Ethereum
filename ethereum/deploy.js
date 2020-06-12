@@ -1,0 +1,31 @@
+const HDWalletProvider = require("@truffle/hdwallet-provider");
+
+const Web3 = require('web3');
+
+const compiledGenerator = require('../ethereum/build/CampaignGenerator.json');
+
+const fs = require('fs-extra')
+
+const mnemonic = fs.readFileSync(".secret").toString().trim();
+
+const rinkebyProvider = fs.readFileSync(".provider").toString().trim();
+
+const provider = new HDWalletProvider(mnemonic, rinkebyProvider);
+
+const web3 = new Web3(provider);
+
+const deploy = async () => {
+  const accounts = await web3.eth.getAccounts();
+  console.log('Attempting to deploy from account', accounts[0]);
+
+  const result = await new web3.eth.Contract(compiledGenerator.abi)
+  .deploy({ data: '0x' + compiledGenerator.evm.bytecode.object })
+  .send({ from: accounts[0] })
+  .on('error', function(error){
+      console.log(error)
+  })
+
+  console.log('Contract deployed to:', result.options.address);
+};
+
+deploy();
