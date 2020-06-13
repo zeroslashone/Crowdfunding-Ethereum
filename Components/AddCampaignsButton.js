@@ -7,54 +7,57 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Box from "@material-ui/core/Box";
-import Backdrop from '@material-ui/core/Backdrop';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import Backdrop from "@material-ui/core/Backdrop";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import campaignGenerator from "../ethereum/campaignGenerator";
 import web3 from "../ethereum/web3";
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
   backdrop: {
     zIndex: theme.zIndex.drawer + 1,
-    color: '#fff',
+    color: "#fff",
   },
 }));
-
-
 
 export default function FormDialog(props) {
   let createContract;
   const [open, setOpen] = React.useState(false);
   const [minimumContribution, setminimumContribution] = React.useState(0);
-  const [name, setName] = React.useState("")
-  const [loading, setLoading] = React.useState(false)
+  const [name, setName] = React.useState("");
+  const [loading, setLoading] = React.useState(false);
   const classes = useStyles();
-  
+
   const handleClickOpen = () => {
     setOpen(true);
   };
 
   const handleCancel = () => {
     setOpen(false);
-  }
+  };
 
   const handleClose = async () => {
     try {
-      console.log(minimumContribution)
-      if(minimumContribution!==0 && name!==""){
+      console.log(minimumContribution);
+      if (minimumContribution !== 0 && name !== "") {
         setOpen(false);
         setLoading(true);
         const accounts = await web3.eth.getAccounts();
         createContract = await campaignGenerator.methods
-          .createCampaign(web3.utils.toWei(minimumContribution, "ether"),name)
+          .createCampaign(web3.utils.toWei(minimumContribution, "ether"), name)
           .send({ from: accounts[0] });
         setLoading(false);
-        alert(` Congrats new campaign successfully created at ${createContract.events.newCampaign.returnValues[0]}`)
+        alert(
+          ` Congrats new campaign successfully created at ${createContract.events.newCampaign.returnValues[0]}`
+        );
       }
     } catch (err) {
       setLoading(false);
-      if(err.message!== 'Please pass numbers as strings or BN objects to avoid precision errors.')
-        alert(err.message)
+      if (
+        err.message !==
+        "Please pass numbers as strings or BN objects to avoid precision errors."
+      )
+        alert(err.message);
     }
   };
 
@@ -73,8 +76,8 @@ export default function FormDialog(props) {
         <DialogTitle id="form-dialog-title">New Campaign</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Enter a name for the Campaign and minimum amount of contributions that is required to be made
-            for this campaign
+            Enter a name for the Campaign and minimum amount of contributions
+            that is required to be made for this campaign
           </DialogContentText>
           <TextField
             required
@@ -89,7 +92,7 @@ export default function FormDialog(props) {
           />
           <TextField
             required
-            placeholder= "Contribution value(in Ethers)"
+            placeholder="Contribution value(in Ethers)"
             margin="dense"
             id="contributionAmount"
             label="Ether"
@@ -109,7 +112,7 @@ export default function FormDialog(props) {
         </DialogActions>
       </Dialog>
       <Backdrop className={classes.backdrop} open={loading}>
-      <CircularProgress color="inherit" />
+        <CircularProgress color="inherit" />
       </Backdrop>
     </div>
   );

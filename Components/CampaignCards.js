@@ -4,7 +4,6 @@ import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
-import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
@@ -17,17 +16,16 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import web3 from "../ethereum/web3";
-import Backdrop from '@material-ui/core/Backdrop';
-import CircularProgress from '@material-ui/core/CircularProgress';
-
-
-const useStyles = makeStyles((theme) =>({
+import Backdrop from "@material-ui/core/Backdrop";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import Slide from "@material-ui/core/Slide";
+const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 350,
   },
   backdrop: {
     zIndex: theme.zIndex.drawer + 1,
-    color: '#fff',
+    color: "#fff",
   },
 }));
 
@@ -35,6 +33,9 @@ export default function ImgMediaCard(props) {
   const [open, setOpen] = React.useState(false);
   const [contributionAmount, setContributionAmount] = React.useState("");
   const [loading, setLoading] = React.useState(false);
+  const [dialog, setDialog] = React.useState(false);
+  const [campaignMinimum, setCampaignMinimum] = React.useState("");
+  const [campaignManager, setCampaignManager] = React.useState("")
   const classes = useStyles();
 
   const handleClose = async (campaignAddress) => {
@@ -43,8 +44,16 @@ export default function ImgMediaCard(props) {
       const minimumContribution = await campaign.methods
         .campaignMinimum()
         .call();
-      if (parseInt(web3.utils.toWei(contributionAmount, 'ether')) < parseInt(minimumContribution)) {
-        alert(`contribution amount too low. minimum: ${web3.utils.fromWei(minimumContribution,'ether')} eth`);
+      if (
+        parseInt(web3.utils.toWei(contributionAmount, "ether")) <
+        parseInt(minimumContribution)
+      ) {
+        alert(
+          `contribution amount too low. minimum: ${web3.utils.fromWei(
+            minimumContribution,
+            "ether"
+          )} eth`
+        );
       } else {
         const manager = await campaign.methods.manager().call();
         if (manager.toLowerCase() === window.ethereum.selectedAddress)
@@ -70,6 +79,31 @@ export default function ImgMediaCard(props) {
     }
   };
 
+  const dialogOpen = async () => {
+    setLoading(true);
+    try{
+      const campaign = Campaign(props.campaign[0])
+      const manager = await campaign.methods.manager().call()
+      const minimumContribution = await campaign.methods.campaignMinimum().call()
+      setCampaignManager(manager)
+      setCampaignMinimum(web3.utils.fromWei(minimumContribution,'ether'))
+      setLoading(false)
+      setDialog(true)
+    }catch(err) {
+      setLoading(false)
+      console.log(err)
+    }
+    
+    
+    setDialog(true);
+  };
+
+  const dialogClose = () => {
+    console.log(dialog);
+    setDialog(false);
+    console.log(dialog);
+  };
+
   const handleClick = () => {
     setOpen(true);
   };
@@ -81,30 +115,30 @@ export default function ImgMediaCard(props) {
   return (
     <Box mt={5} ml={5}>
       <Card className={classes.root} raised>
-        <CardActionArea>
-          <CardContent>
-            <Typography gutterBottom variant="h5" component="h2">
-              {props.campaign[1]}
-            </Typography>
-            <Divider />
-            <Typography
-              variant="body2"
-              color="textSecondary"
-              component="p"
-              noWrap
-            >
-              Contract Adress: {props.campaign[0]}
-            </Typography>
-            <Typography
-              variant="body2"
-              color="textSecondary"
-              component="p"
-              noWrap
-            >
-              Campaign Goal: 0
-            </Typography>
-          </CardContent>
-        </CardActionArea>
+          <CardActionArea>
+            <CardContent>
+              <Typography gutterBottom variant="h5" component="h2">
+                {props.campaign[1]}
+              </Typography>
+              <Divider />
+              <Typography
+                variant="body2"
+                color="textSecondary"
+                component="p"
+                noWrap
+              >
+                Contract Adress: {props.campaign[0]}
+              </Typography>
+              <Typography
+                variant="body2"
+                color="textSecondary"
+                component="p"
+                noWrap
+              >
+                Campaign Goal: 0
+              </Typography>
+            </CardContent>
+          </CardActionArea>
         <CardActions>
           <Button size="small" color="primary" onClick={handleClick}>
             Contribute
@@ -112,6 +146,23 @@ export default function ImgMediaCard(props) {
           <Button size="small" color="primary">
             Goals
           </Button>
+          <Button onClick={dialogOpen} color="primary">
+            View
+          </Button>
+          <Dialog open={dialog} aria-labelledby="form-dialog-title">
+            <DialogTitle id="form-dialog-title">Campaign Details</DialogTitle>
+            <DialogContent>
+              <DialogContentText>Campaign Name: {props.campaign[1]}</DialogContentText>
+              <DialogContentText>Campaign Address: {props.campaign[0]}</DialogContentText>
+              <DialogContentText>Campaign Manager: {campaignManager}</DialogContentText>
+              <DialogContentText>Campaign Minimum: {campaignMinimum} ETH</DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={dialogClose} color="primary">
+                Cancel
+              </Button>
+            </DialogActions>
+          </Dialog>
           <Dialog open={open} aria-labelledby="form-dialog-title">
             <DialogTitle id="form-dialog-title">Contribute</DialogTitle>
             <DialogContent>
@@ -142,7 +193,7 @@ export default function ImgMediaCard(props) {
         </CardActions>
       </Card>
       <Backdrop className={classes.backdrop} open={loading}>
-      <CircularProgress color="inherit" />
+        <CircularProgress color="inherit" />
       </Backdrop>
     </Box>
   );

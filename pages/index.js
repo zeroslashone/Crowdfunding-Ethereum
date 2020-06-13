@@ -5,7 +5,7 @@ import NavBar from "../Components/NavBar";
 import ImgMediaCard from "../Components/CampaignCards";
 import AddCampaignButtons from "../Components/AddCampaignsButton";
 import Grid from "@material-ui/core/Grid";
-import CssBaseline from '@material-ui/core/CssBaseline'
+import CssBaseline from "@material-ui/core/CssBaseline";
 
 class CampaignIndex extends Component {
   static async getInitialProps() {
@@ -30,9 +30,9 @@ class CampaignIndex extends Component {
         <NavBar />
         <Grid container>
           <Grid container xs={8}>
-            {this.props.campaigns.map((campaign) => {
+            {this.props.campaigns.map((campaign, index) => {
               return (
-                <Grid item xs={6}>
+                <Grid key={index} item xs={6}>
                   <ImgMediaCard campaign={campaign} />
                 </Grid>
               );
