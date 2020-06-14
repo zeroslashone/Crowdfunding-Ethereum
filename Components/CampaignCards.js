@@ -35,7 +35,8 @@ export default function ImgMediaCard(props) {
   const [loading, setLoading] = React.useState(false);
   const [dialog, setDialog] = React.useState(false);
   const [campaignMinimum, setCampaignMinimum] = React.useState("");
-  const [campaignManager, setCampaignManager] = React.useState("")
+  const [campaignManager, setCampaignManager] = React.useState("");
+  const [goals, setGoals] = React.useState([])
   const classes = useStyles();
 
   const handleClose = async (campaignAddress) => {
@@ -81,21 +82,23 @@ export default function ImgMediaCard(props) {
 
   const dialogOpen = async () => {
     setLoading(true);
-    try{
-      const campaign = Campaign(props.campaign[0])
-      const manager = await campaign.methods.manager().call()
-      const minimumContribution = await campaign.methods.campaignMinimum().call()
-      setCampaignManager(manager)
-      setCampaignMinimum(web3.utils.fromWei(minimumContribution,'ether'))
-      setLoading(false)
-      setDialog(true)
-    }catch(err) {
-      setLoading(false)
-      console.log(err)
+    try {
+      const campaign = Campaign(props.campaign[0]);
+      setCampaignManager(await campaign.methods.manager().call());
+      setCampaignMinimum(
+        web3.utils.fromWei(
+          await campaign.methods.campaignMinimum().call(),
+          "ether"
+        )
+      );
+      setLoading(false);
+      setDialog(true);
+    } catch (err) {
+      setLoading(false);
+      console.log(err);
+    } finally {
+      setDialog(true);
     }
-    
-    
-    setDialog(true);
   };
 
   const dialogClose = () => {
@@ -115,47 +118,56 @@ export default function ImgMediaCard(props) {
   return (
     <Box mt={5} ml={5}>
       <Card className={classes.root} raised>
-          <CardActionArea>
-            <CardContent>
-              <Typography gutterBottom variant="h5" component="h2">
-                {props.campaign[1]}
-              </Typography>
-              <Divider />
-              <Typography
-                variant="body2"
-                color="textSecondary"
-                component="p"
-                noWrap
-              >
-                Contract Adress: {props.campaign[0]}
-              </Typography>
-              <Typography
-                variant="body2"
-                color="textSecondary"
-                component="p"
-                noWrap
-              >
-                Campaign Goal: 0
-              </Typography>
-            </CardContent>
-          </CardActionArea>
+        <CardActionArea>
+          <CardContent>
+            <Typography gutterBottom variant="h5" component="h2">
+              {props.campaign[1]}
+            </Typography>
+            <Divider />
+            <Typography
+              variant="body2"
+              color="textSecondary"
+              component="p"
+              noWrap
+            >
+              Contract Adress: {props.campaign[0]}
+            </Typography>
+            <Typography
+              variant="body2"
+              color="textSecondary"
+              component="p"
+              noWrap
+            >
+              Campaign Goal: 0
+            </Typography>
+          </CardContent>
+        </CardActionArea>
         <CardActions>
           <Button size="small" color="primary" onClick={handleClick}>
             Contribute
           </Button>
-          <Button size="small" color="primary">
+          <Button size="small" color="primary" /*onClick= {handleGoals}*/>
             Goals
           </Button>
-          <Button onClick={dialogOpen} color="primary">
+          <Button size="small" onClick={dialogOpen} color="primary">
             View
           </Button>
+
           <Dialog open={dialog} aria-labelledby="form-dialog-title">
             <DialogTitle id="form-dialog-title">Campaign Details</DialogTitle>
             <DialogContent>
-              <DialogContentText>Campaign Name: {props.campaign[1]}</DialogContentText>
-              <DialogContentText>Campaign Address: {props.campaign[0]}</DialogContentText>
-              <DialogContentText>Campaign Manager: {campaignManager}</DialogContentText>
-              <DialogContentText>Campaign Minimum: {campaignMinimum} ETH</DialogContentText>
+              <DialogContentText>
+                Campaign Name: {props.campaign[1]}
+              </DialogContentText>
+              <DialogContentText>
+                Campaign Address: {props.campaign[0]}
+              </DialogContentText>
+              <DialogContentText>
+                Campaign Manager Address: {campaignManager}
+              </DialogContentText>
+              <DialogContentText>
+                Campaign Minimum: {campaignMinimum} ETH
+              </DialogContentText>
             </DialogContent>
             <DialogActions>
               <Button onClick={dialogClose} color="primary">

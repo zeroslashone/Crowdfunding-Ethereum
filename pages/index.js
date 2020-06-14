@@ -6,7 +6,7 @@ import ImgMediaCard from "../Components/CampaignCards";
 import AddCampaignButtons from "../Components/AddCampaignsButton";
 import Grid from "@material-ui/core/Grid";
 import CssBaseline from "@material-ui/core/CssBaseline";
-
+import ContributionDetails from "../Components/ContributionDetails"
 class CampaignIndex extends Component {
   static async getInitialProps() {
     const campaignCount = await campaignGenerator.methods
@@ -38,8 +38,9 @@ class CampaignIndex extends Component {
               );
             })}
           </Grid>
-          <Grid container xs={4}>
+          <Grid container xs={4} direction = "column" spacing = {4}>
             <AddCampaignButtons />
+            <ContributionDetails campaigns = {this.props.campaigns}/>
           </Grid>
         </Grid>
       </div>
