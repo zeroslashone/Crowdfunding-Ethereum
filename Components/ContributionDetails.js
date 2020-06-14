@@ -23,6 +23,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function ContributionDetails(props) {
+  
+  
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [campaignNumber, setcampaignNumber] = React.useState(0);
@@ -30,6 +32,8 @@ export default function ContributionDetails(props) {
   const [loading, setLoading] = React.useState(false);
   const [userDetails, setUserDetails] = React.useState("");
   const [dialog, setDialog] = React.useState(false);
+  
+  
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -100,9 +104,11 @@ export default function ContributionDetails(props) {
   return (
     <div>
       <Box ml={9} mt={10}>
+        
         <Button onClick={handleClickOpen} variant="contained" color="primary">
           Check Contribution details
         </Button>
+        
         <Dialog open={dialog} aria-labelledby="form-dialog-title">
           <DialogTitle id="form-dialog-title">Contribution Details</DialogTitle>
           <DialogInfo />
@@ -142,6 +148,7 @@ export default function ContributionDetails(props) {
             </Select>
             <TextField
               required
+              autoComplete="off"
               margin="dense"
               id="contractName"
               label="Contributor's Address"
@@ -160,9 +167,11 @@ export default function ContributionDetails(props) {
             </Button>
           </DialogActions>
         </Dialog>
+        
         <Backdrop className={classes.backdrop} open={loading}>
           <CircularProgress color="inherit" />
         </Backdrop>
+      
       </Box>
     </div>
   );

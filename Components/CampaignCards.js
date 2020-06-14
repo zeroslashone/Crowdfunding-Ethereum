@@ -18,7 +18,8 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import web3 from "../ethereum/web3";
 import Backdrop from "@material-ui/core/Backdrop";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import Slide from "@material-ui/core/Slide";
+import FinalizeCampaign from "./FinalizeCampaign"
+
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 350,
@@ -36,8 +37,8 @@ export default function ImgMediaCard(props) {
   const [dialog, setDialog] = React.useState(false);
   const [campaignMinimum, setCampaignMinimum] = React.useState("");
   const [campaignManager, setCampaignManager] = React.useState("");
-  const [goals, setGoals] = React.useState([])
   const [campaignBalance, setCampaignBalance] = React.useState("")
+  const [campaignTarget, setCampaignTarget] = React.useState("")
   const classes = useStyles();
 
   const handleClose = async (campaignAddress) => {
@@ -87,6 +88,7 @@ export default function ImgMediaCard(props) {
       const campaign = Campaign(props.campaign[0]);
       setCampaignBalance(web3.utils.fromWei(await web3.eth.getBalance(props.campaign[0]),'ether'))
       setCampaignManager(await campaign.methods.manager().call());
+      setCampaignTarget(web3.utils.fromWei(await campaign.methods.target().call(),'ether'));
       setCampaignMinimum(
         web3.utils.fromWei(
           await campaign.methods.campaignMinimum().call(),
@@ -134,27 +136,16 @@ export default function ImgMediaCard(props) {
             >
               Contract Adress: {props.campaign[0]}
             </Typography>
-            <Typography
-              variant="body2"
-              color="textSecondary"
-              component="p"
-              noWrap
-            >
-              Campaign Goal: 0
-            </Typography>
           </CardContent>
         </CardActionArea>
         <CardActions>
-          <Button size="small" color="primary" onClick={handleClick}>
-            Contribute
-          </Button>
-          <Button size="small" color="primary" /*onClick= {handleGoals}*/>
-            Goals
-          </Button>
-          <Button size="small" onClick={dialogOpen} color="primary">
-            View
-          </Button>
-
+        <Button size="small" color="primary" onClick={handleClick} disabled={props.campaignStatus}>
+        Contribute
+      </Button>
+      <FinalizeCampaign campaignAddress={props.campaign[0]} disabled={props.campaignStatus}/>
+      <Button size="small" onClick={dialogOpen} color="primary" disabled={props.campaignStatus}>
+        View
+      </Button>
           <Dialog open={dialog} aria-labelledby="form-dialog-title">
             <DialogTitle id="form-dialog-title">Campaign Details</DialogTitle>
             <DialogContent>
@@ -169,6 +160,9 @@ export default function ImgMediaCard(props) {
               </DialogContentText>
               <DialogContentText>
                 Total Amount Raised So Far: {campaignBalance} ETH
+              </DialogContentText>
+              <DialogContentText>
+                Campaign Target: {campaignTarget} ETH
               </DialogContentText>
               <DialogContentText>
                 Campaign Minimum: {campaignMinimum} ETH
@@ -186,6 +180,7 @@ export default function ImgMediaCard(props) {
               <DialogContentText>Enter a Contribution Amount</DialogContentText>
               <TextField
                 autoFocus
+                autoComplete="off"
                 margin="dense"
                 id="name"
                 label="Amount"

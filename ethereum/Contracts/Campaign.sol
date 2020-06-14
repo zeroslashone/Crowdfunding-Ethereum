@@ -5,26 +5,24 @@ contract Campaign {
     uint public campaignMinimum;
     address public manager;
     string public campaignName;
+    uint public target;
+    bool public completed;
+    address payable recipient;
     //address public campaignAddress;
-    struct Goals {
-        string name;
-        string description;
-        uint target;
-        address payable recipient;
-        bool completed;
-    }
-    Goals[] public goals;
-    
+
     struct contributerDetails {
         uint totalContributions;
         uint count;
     }
     mapping(address => contributerDetails) public contributors;
     
-    constructor(uint minimum, address creator, string memory _name) public {
+    constructor(uint minimum, address creator, string memory _name, uint _target, address payable _recipient) public {
         campaignMinimum = minimum;
         manager = creator;
         campaignName = _name;
+        target = _target;
+        completed=false;
+        recipient =_recipient;
         //campaignAddress = address(this);
     }
     
@@ -41,39 +39,12 @@ contract Campaign {
         contributor.totalContributions += msg.value;
     }
     
-    function createGoal(string memory name, string memory description, uint target, address payable recipient) 
-    public accessCheck {
-        Goals memory newGoal = Goals({
-            name: name,
-            description: description,
-            target: target,
-            recipient: recipient,
-            completed: false
-        });
-        goals.push(newGoal);
-    }
     
-    function transferFunds(uint index, uint raisedAmount) public accessCheck {
-        Goals storage goal = goals[index];
-        require(raisedAmount<=address(this).balance,"The balance amount is not greater than goal amount");
-        require(!goal.completed && raisedAmount >= (goal.target/2), "goal criteria not met");
+    function transferFunds() public accessCheck {
+        require(!completed && address(this).balance >= (target/2), "Either this goal has already been completed or the raised amount is less than half the target");
         
-        goal.completed = true;
-        goal.recipient.transfer(raisedAmount);
-    }
-    
-    function goalsDetails(uint index) public view returns(string memory,string memory,uint,address, bool ) {
-        Goals storage goal = goals[index];
-        return (
-            goal.name,
-            goal.description,
-            goal.target,
-            goal.recipient,
-            goal.completed
-        );
-    }
-    function sizeOfGoals() public view returns(uint) {
-        return goals.length;
+        completed = true;
+        recipient.transfer(address(this).balance);
     }
     
     function contributorDetails(address contributorAddress) public view returns(uint,uint) {

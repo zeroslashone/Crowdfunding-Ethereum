@@ -26,6 +26,9 @@ export default function FormDialog(props) {
   const [minimumContribution, setminimumContribution] = React.useState(0);
   const [name, setName] = React.useState("");
   const [loading, setLoading] = React.useState(false);
+  const [target,setTarget] = React.useState("")
+  const [recipient, setRecipient] = React.useState("")
+  
   const classes = useStyles();
 
   const handleClickOpen = () => {
@@ -39,17 +42,18 @@ export default function FormDialog(props) {
   const handleClose = async () => {
     try {
       console.log(minimumContribution);
-      if (minimumContribution !== 0 && name !== "") {
+      if (minimumContribution !== 0 && name !== "" && target !== "" && recipient!=="") {
         setOpen(false);
         setLoading(true);
         const accounts = await web3.eth.getAccounts();
         createContract = await campaignGenerator.methods
-          .createCampaign(web3.utils.toWei(minimumContribution, "ether"), name)
+          .createCampaign(web3.utils.toWei(minimumContribution, "ether"), name, web3.utils.toWei(target), recipient)
           .send({ from: accounts[0] });
         setLoading(false);
         alert(
           ` Congrats new campaign successfully created at ${createContract.events.newCampaign.returnValues[0]}`
         );
+        location.reload();
       }
     } catch (err) {
       setLoading(false);
@@ -76,11 +80,11 @@ export default function FormDialog(props) {
         <DialogTitle id="form-dialog-title">New Campaign</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Enter a name for the Campaign and minimum amount of contributions
-            that is required to be made for this campaign
+            Enter a name for the Campaign,minimum amount of contribution, the target amount and recipient address.
           </DialogContentText>
           <TextField
             required
+            autoComplete="off"
             autoFocus
             margin="dense"
             id="contractName"
@@ -92,14 +96,39 @@ export default function FormDialog(props) {
           />
           <TextField
             required
+            autoComplete="off"
             placeholder="Contribution value(in Ethers)"
             margin="dense"
             id="contributionAmount"
-            label="Ether"
+            label="Minimum Contribution(in Ethers)"
             type="text"
             onChange={(event) => setminimumContribution(event.target.value)}
             fullWidth
             variant="outlined"
+          />
+          <TextField
+            required
+            autoComplete="off"
+            margin="dense"
+            id="contractTarget"
+            label="Goal (in Ethers)"
+            type="text"
+            onChange={(event) => setTarget(event.target.value)}
+            fullWidth
+            variant="outlined"
+            placeholder= "Amount in Ethers"
+          />
+          <TextField
+            required
+            autoComplete="off"
+            margin="dense"
+            id="contractRecipient"
+            label="Campaign Recipient"
+            type="text"
+            onChange={(event) => setRecipient(event.target.value)}
+            fullWidth
+            variant="outlined"
+            placeholder= "Recipient's address"
           />
         </DialogContent>
         <DialogActions>
