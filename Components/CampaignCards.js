@@ -37,6 +37,7 @@ export default function ImgMediaCard(props) {
   const [campaignMinimum, setCampaignMinimum] = React.useState("");
   const [campaignManager, setCampaignManager] = React.useState("");
   const [goals, setGoals] = React.useState([])
+  const [campaignBalance, setCampaignBalance] = React.useState("")
   const classes = useStyles();
 
   const handleClose = async (campaignAddress) => {
@@ -84,6 +85,7 @@ export default function ImgMediaCard(props) {
     setLoading(true);
     try {
       const campaign = Campaign(props.campaign[0]);
+      setCampaignBalance(web3.utils.fromWei(await web3.eth.getBalance(props.campaign[0]),'ether'))
       setCampaignManager(await campaign.methods.manager().call());
       setCampaignMinimum(
         web3.utils.fromWei(
@@ -166,12 +168,15 @@ export default function ImgMediaCard(props) {
                 Campaign Manager Address: {campaignManager}
               </DialogContentText>
               <DialogContentText>
+                Total Amount Raised So Far: {campaignBalance} ETH
+              </DialogContentText>
+              <DialogContentText>
                 Campaign Minimum: {campaignMinimum} ETH
               </DialogContentText>
             </DialogContent>
             <DialogActions>
               <Button onClick={dialogClose} color="primary">
-                Cancel
+                Close
               </Button>
             </DialogActions>
           </Dialog>
