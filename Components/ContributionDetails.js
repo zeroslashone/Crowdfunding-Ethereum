@@ -89,10 +89,12 @@ export default function ContributionDetails(props) {
       );
     } else {
       return (
-        <DialogContentText fullWidth>
+        <Box paddingLeft={3}>
+        <DialogContentText fullWidth >
           Looks like you haven't made any contributions so far!!! Do Consider
           contributing. Thank You!!!
         </DialogContentText>
+        </Box>
       );
     }
   };
@@ -119,17 +121,15 @@ export default function ContributionDetails(props) {
             <DialogContentText>
               Select the name and Enter your Address
             </DialogContentText>
-            <InputLabel htmlFor="outlined-campaign-name-native-simple">
+            <InputLabel id="demo-simple-select-label">
               Campaign Name
             </InputLabel>
             <Select
               native
               onChange={(event) => setcampaignNumber(event.target.value)}
+              labelId="demo-simple-select-label"
+          id="demo-simple-select"
               fullWidth
-              inputProps={{
-                name: "campaign-name",
-                id: "outlined-campaign-name-native-simple",
-              }}
             >
               <option aria-label="None" value={-1}>
                 None
