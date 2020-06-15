@@ -10,7 +10,7 @@
 
 Execution:
 1. Add a .secret file that holds your secret mnemonic phrase
-2. Add a .provider file that contains the link to a https provider(Example: [Infura Provider](https://infura.io/) 
+2. Add a .provider file that contains the link to a https provider(Example: [Infura Provider](https://infura.io/))
 3. Run the development server:
 
 ```bash
