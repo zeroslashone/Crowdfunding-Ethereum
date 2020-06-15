@@ -4,6 +4,7 @@
 
 ### Requirements:
  1. Node JS >=12.0
+ 2. [Metamask Extension](https://metamask.io/)
  
 ### Installation:
 1. Run ```npm install``` or ```yarn install``` to install all the dependencies.
