@@ -9,7 +9,9 @@
 1. Run ```npm install``` or ```yarn install``` to install all the dependencies.
 
 Execution:
-1. Run the development server:
+1. Add a .secret file that holds your secret mnemonic phrase
+2. Add a .provider file that contains the link to a https provider(Example: [Infura Provider](https://infura.io/) 
+3. Run the development server:
 
 ```bash
 npm run dev
