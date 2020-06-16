@@ -29,6 +29,7 @@ export default function ContributionDetails(props) {
   const [open, setOpen] = React.useState(false);
   const [campaignNumber, setcampaignNumber] = React.useState(0);
   const [userAddress, setUserAddress] = React.useState("");
+  const [contributorDetailsAddress, setContributorDetailsAddress] = React.useState("")
   const [loading, setLoading] = React.useState(false);
   const [userDetails, setUserDetails] = React.useState("");
   const [dialog, setDialog] = React.useState(false);
@@ -53,6 +54,9 @@ export default function ContributionDetails(props) {
         setOpen(false);
         setLoading(false);
         setDialog(true);
+        setContributorDetailsAddress(userAddress)
+        console.log(contributorDetailsAddress)
+        setUserAddress("")
       } else {
         alert("Please Enter Valid Details");
       }
@@ -75,7 +79,7 @@ export default function ContributionDetails(props) {
             Campaign Name: {props.campaigns[campaignNumber][1]}
           </DialogContentText>
           <DialogContentText>
-            Contributors Address: {userAddress}
+            Contributors Address: {contributorDetailsAddress}
           </DialogContentText>
           <DialogContentText>
             Total Contributions: {web3.utils.fromWei(userDetails[0], "ether")}{" "}

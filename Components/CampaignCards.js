@@ -71,6 +71,7 @@ export default function ImgMediaCard(props) {
               value: web3.utils.toWei(contributionAmount, "ether"),
               from: window.ethereum.selectedAddress,
             });
+            setContributionAmount("")
             setLoading(false);
             alert("You have successfully contributed to this campaign");
           } catch (err) {
