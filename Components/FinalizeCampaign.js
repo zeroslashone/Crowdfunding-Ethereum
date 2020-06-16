@@ -57,7 +57,7 @@ export default function FinalizeCampaign(props) {
       location.reload();
     } catch(err) {
       setLoading(false)
-      alert(err)
+      alert(err.message)
     }
   }
 
