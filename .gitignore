@@ -34,3 +34,4 @@ ethereum/.provider
 ethereum/build
 
 Archive-*.zip
+yarn.lock
