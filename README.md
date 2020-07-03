@@ -30,3 +30,5 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 ### Execution:
  1. Create and start the container and the production build of the project by simply running the following command:
  ```docker run -p 8081:8081 pol905/crowdfunding-ethereum```
+
+ Open [http://localhost:8081](http://localhost:8081) with your browser to see the result.
