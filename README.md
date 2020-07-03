@@ -26,6 +26,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ### Requirements:
  1. [Docker Desktop](https://www.docker.com/products/docker-desktop)
+ 2. [Metamask Extension](https://metamask.io/)
 
 ### Execution:
  1. Create and start the container and the production build of the project by simply running the following command:
