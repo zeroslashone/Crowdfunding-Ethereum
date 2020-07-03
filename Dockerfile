@@ -7,9 +7,8 @@ WORKDIR /app
 #Move everything to the working directory
 COPY . /app
 
-#Install yarn package manager and install all the dependencies 
-#and create a production build of the app
-RUN apk add git yarn
+#Install all the dependencies and create a production build of the app
+RUN apk add git
 RUN yarn install
 RUN yarn build
 
