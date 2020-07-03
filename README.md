@@ -25,13 +25,10 @@
 1. Run ```npm install``` or ```yarn install``` to install all the dependencies.
 
 Execution:
-1. Add a .secret file that holds your secret mnemonic phrase
-2. Add a .provider file that contains the link to a https provider(Example: [Infura Provider](https://infura.io/))
-3. Run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-```
-4. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+1. ```cd``` into the ethereum folder.
+2. Add a .secret file that holds your secret mnemonic phrase.
+3. Add a .provider file that contains the link to a https provider(Example: [Infura Provider](https://infura.io/)).
+4. Run ```node compile``` to compile the contracts ( Creates a build directory with the Compiled contracts stored in ```.json``` files).
+5. Run ```npm run build``` or ```yarn build``` to build the app.
+6. Run ```npm run start``` or ```yarn start``` to start the server.
+7. Open [http://localhost:8081](http://localhost:8081) with your browser to see the result.
