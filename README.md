@@ -24,9 +24,9 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## Alternative [Recommended]:
 
-# Requirements:
+### Requirements:
  1. [Docker Desktop](https://www.docker.com/products/docker-desktop)
 
-# Execution:
+### Execution:
  1. Create and start the container and the production build of the project by simply running the following command:
  ```docker run -p 8081:8081 pol905/crowdfunding-ethereum```
