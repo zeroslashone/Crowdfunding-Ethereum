@@ -4,6 +4,9 @@
 
 ### Requirements:
  1. [Docker Desktop](https://www.docker.com/products/docker-desktop)
+    ```
+    Note: Docker Desktop for Windows is available on Windows Home Edition(>= build 2004),Professional, Education and the Enterprise Edition 
+    ```
  2. [Metamask Extension](https://metamask.io/)
 
 ### Execution:
