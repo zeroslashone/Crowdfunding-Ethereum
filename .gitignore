@@ -35,5 +35,4 @@ ethereum/build
 
 Archive-*.zip
 yarn.lock
-Dockerfile
 .dockerignore

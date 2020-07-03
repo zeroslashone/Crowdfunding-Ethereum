@@ -11,7 +11,7 @@
     "@material-ui/core": "^4.10.1",
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.56",
-    "@truffle/hdwallet-provider": "^1.0.35",
+    "@truffle/hdwallet-provider": "^1.0.36",
     "antd": "^4.3.3",
     "chai": "^4.2.0",
     "clsx": "^1.1.1",
