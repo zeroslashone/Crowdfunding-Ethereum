@@ -1,6 +1,18 @@
 # Ethereum-Crowdfunding Project
 
-## Getting Started
+## Method 1 [Recommended]:
+
+### Requirements:
+ 1. [Docker Desktop](https://www.docker.com/products/docker-desktop)
+ 2. [Metamask Extension](https://metamask.io/)
+
+### Execution:
+ 1. Create and start the container and the production build of the project by simply running the following command:
+ ```docker run -p 8081:8081 pol905/crowdfunding-ethereum```
+ 
+ 2. Open [http://localhost:8081](http://localhost:8081) with your browser to see the result.
+
+## Method 2:
 
 ### Requirements:
  1. Node JS >=12.0
@@ -19,17 +31,4 @@ npm run dev
 # or
 yarn dev
 ```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-## Alternative [Recommended]:
-
-### Requirements:
- 1. [Docker Desktop](https://www.docker.com/products/docker-desktop)
- 2. [Metamask Extension](https://metamask.io/)
-
-### Execution:
- 1. Create and start the container and the production build of the project by simply running the following command:
- ```docker run -p 8081:8081 pol905/crowdfunding-ethereum```
-
- Open [http://localhost:8081](http://localhost:8081) with your browser to see the result.
+4. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
