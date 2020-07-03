@@ -24,7 +24,7 @@
 ### Installation:
 1. Run ```npm install``` or ```yarn install``` to install all the dependencies.
 
-Execution:
+### Execution:
 1. ```cd``` into the ethereum folder.
 2. Add a .secret file that holds your secret mnemonic phrase.
 3. Add a .provider file that contains the link to a https provider(Example: [Infura Provider](https://infura.io/)).
