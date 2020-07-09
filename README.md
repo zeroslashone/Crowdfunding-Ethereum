@@ -5,7 +5,7 @@
 ### Requirements:
  1. [Docker Desktop](https://www.docker.com/products/docker-desktop)
     ```
-    Note: Docker Desktop for Windows is available on Windows Home Edition(>= build 2004),Professional, Education and the Enterprise Edition 
+    Note: Docker Desktop for Windows is not supported on the Windows Home Edition which have a version number < 2004
     ```
  2. [Metamask Extension](https://metamask.io/)
 
@@ -24,7 +24,7 @@
 ### Installation:
 1. Run ```npm install``` or ```yarn install``` to install all the dependencies.
 
-Execution:
+### Execution:
 1. ```cd``` into the ethereum folder.
 2. Add a .secret file that holds your secret mnemonic phrase.
 3. Add a .provider file that contains the link to a https provider(Example: [Infura Provider](https://infura.io/)).
