@@ -10,7 +10,9 @@ if (typeof window !== "undefined") {
     ethereum.request({method: 'eth_requestAccounts'})
   } else {
     const metamask = "https://metamask.io"
-    alert(`Oops!! Looks like you haven't installed metamask. You will be redirected to ${metamask} to install the chrome extension`)
+    alert(`Oops!! Looks like you haven't installed metamask. You will be redirected to ${metamask} to install the chrome extension
+    1.Switch to the Rinkeby Network on Metamask.
+    2. Load some test funds from https://faucet.rinkeby.io/`)
     window.location.href = metamask
   }
 } else {
