@@ -1,0 +1,18 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t pol905/crowdfunding-ethereum .
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - docker push pol905/crowdfunding-ethereum
+
+deploy:
+  provider: elasticbeanstalk
+  region: "us-east-1"
+  app: "Crowdfunding-Ethereum-Docker-dev"
+  env: "CrowdfundingEthereumDockerDev-env"
+  bucket_name: "elasticbeanstalk-us-east-1-862226101526"
+  bucket_path: "Crowdfunding-Ethereum-Docker-dev"
+  on:
+    branch: master
