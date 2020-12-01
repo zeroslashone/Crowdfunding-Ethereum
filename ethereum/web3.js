@@ -16,7 +16,7 @@ if (typeof window !== "undefined") {
 } else {
   // we are not on the browser *OR* the user does not have metamask
   const provider = new Web3.providers.HttpProvider(
-    process.env.PROVIDER //Use infura rinkeby endpoint
+    "https://rinkeby.infura.io/v3/18efa7d57b69434699108ad60a2c8a39" //Use infura rinkeby endpoint
   );
   web3 = new Web3(provider);
 }

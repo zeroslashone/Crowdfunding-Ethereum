@@ -8,7 +8,7 @@ const fs = require('fs-extra')
 
 const mnemonic = 'couple clump rare inspire dune attitude girl capable rural awkward deliver leaf' //fs.readFileSync(".secret").toString().trim();
 
-const rinkebyProvider = process.env.PROVIDER; //fs.readFileSync(".provider").toString().trim();
+const rinkebyProvider = 'https://rinkeby.infura.io/v3/18efa7d57b69434699108ad60a2c8a39'; //fs.readFileSync(".provider").toString().trim();
 
 const provider = new HDWalletProvider(mnemonic, rinkebyProvider);
 
