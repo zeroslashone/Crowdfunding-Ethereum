@@ -37,3 +37,4 @@ Archive-*.zip
 yarn.lock
 .dockerignore
 debug.log
+environment_variables
